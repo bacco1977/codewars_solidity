@@ -10,14 +10,12 @@ contract CountByX {
      * @param n The number of multiples to return.
      * @return An array of the first n multiples of x.
      */
-  function countByX(uint x, uint n) public pure returns (uint[] memory) {
-    uint[] memory result = new uint[](n);
-    
-    for (uint i = 0; i < n; i++) {
-      result[i] = x * (i + 1);
-    }
-    
-    return result;
+     
+  function countBy(int x, int n) public pure returns (int[] memory) {
+    int[] memory z = new int[](uint(n));
+    for (int i = 0; i < n; i++) {
+      z[uint(i)] = x * (i + 1);
+    }     
+    return z;
   }
 }
-
