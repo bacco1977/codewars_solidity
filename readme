@@ -1,0 +1,62 @@
+# Codewars Solidity Practice
+
+This repo contains a collection of Solidity smart contracts and corresponding JavaScript tests, designed as practical coding exercises to level up your smart contract development skills. Inspired by the "Codewars" philosophy: learn through hands-on, incremental challenges.
+
+## Structure
+
+- `contracts/` &mdash; Solidity contracts for each exercise
+- `test/` &mdash; Hardhat/Chai test files validating the solutions
+- `hardhat.config.js` &mdash; Hardhat configuration
+- `package.json` &mdash; Project metadata and dependencies
+
+## Getting Started
+
+1. **Install dependencies**
+
+   ```
+   npm install
+   ```
+
+2. **Run the tests**
+
+   ```
+   npm test
+   ```
+
+   This will compile the contracts and run all test cases in `test/`.
+
+## Example: DummyToken
+
+The provided `DummyToken` contract implements a simple `multiply` function, and is accompanied by test cases that check its correctness for positive numbers, negative numbers, zero, and larger numbers.
+
+_Sample contract:_
+
+```solidity
+function multiply(int a, int b) pure public returns (int) {
+  return a * b;
+}
+```
+
+_Sample test:_
+
+```js
+it("Should multiply two positive numbers correctly", async function () {
+  const result = await dummyToken.multiply(5, 10);
+  expect(result).to.equal(50n);
+});
+```
+
+## How to Use
+
+- Clone/fork the repo.
+- Browse the `contracts/` folder to find exercises.
+- Implement your solution (or extend it).
+- Run `npm test` to check correctness.
+
+## Contribution
+
+Want to add new Solidity exercises or improve tests? PRs are welcome! Please keep each new exercise self-contained in a single contract and test file.
+
+---
+
+Happy hacking and sharpening your Solidity skills!
