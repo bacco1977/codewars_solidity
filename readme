@@ -60,3 +60,118 @@ Want to add new Solidity exercises or improve tests? PRs are welcome! Please kee
 ---
 
 Happy hacking and sharpening your Solidity skills!
+# Solidity Exercises Collection
+
+Sharpen your Solidity and smart contract skills with this repo of simple, self-contained smart contract programming exercises! Each exercise includes the contract implementation and a full set of automated tests using Hardhat, ethers.js, and chai.
+
+---
+
+## Table of Contents
+
+1. [DummyToken](#dummytoken)
+2. [CountByX (Multiples)](#countbyx-multiples)
+
+---
+
+## Getting Started
+
+### 1. Install dependencies
+
+```bash
+npm install
+```
+
+### 2. Run all tests
+
+```bash
+npm test
+```
+This will compile all smart contracts and run every test in the `test/` directory.
+
+---
+
+## Exercise List
+
+### 1. DummyToken
+
+**File:** `contracts/DummyToken.sol`  
+**Test:** `test/DummyToken.test.js`
+
+- Implements a classic multiplication function using signed integers.
+- Tests verify multiplication for:
+  - Two positive numbers
+  - Positive and negative numbers
+  - Zero multiplication
+  - Large number multiplication
+
+**Sample Solidity contract snippet:**
+```solidity
+function multiply(int a, int b) pure public returns (int) {
+  return a * b;
+}
+```
+
+**Sample JavaScript test:**
+```js
+it("Should multiply two positive numbers correctly", async function () {
+  const result = await dummyToken.multiply(5, 10);
+  expect(result).to.equal(50n);
+});
+```
+
+---
+
+### 2. CountByX (Multiples)
+
+**File:** `contracts/countbyx.sol`  
+**Test:** `test/countbyx.test.js`
+
+- Provides a function to return the first `n` multiples of a number `x`.
+- Useful for pattern generation and array manipulation exercises.
+- Tests check for:
+  - Correct array length
+  - Correct multiples computation
+  - Edge cases (e.g., `n=1`, large numbers)
+
+**Sample Solidity contract snippet:**
+```solidity
+function countByX(uint x, uint n) public pure returns (uint[] memory) {
+  uint[] memory result = new uint[](n);
+  for (uint i = 0; i < n; i++) {
+    result[i] = x * (i + 1);
+  }
+  return result;
+}
+```
+
+**Sample JavaScript test:**
+```js
+it("Should return the first 3 multiples of 5", async function () {
+  const result = await multiplesContract.multiples(5, 3);
+  expect(result.length).to.equal(3);
+  expect(result[0]).to.equal(5n);
+  expect(result[1]).to.equal(10n);
+  expect(result[2]).to.equal(15n);
+});
+```
+
+---
+
+## How To Use
+
+- Clone or fork this repository.
+- Explore the `contracts/` folder for all available exercises.
+- Implement or extend any contract.
+- Run `npm test` to make sure your solution passes the test suite.
+
+---
+
+## Contributing
+
+Want to suggest a new Solidity exercise or improve an existing one? PRs are very welcome! Please make each new exercise modular, in its own contract and test file.
+
+---
+
+**Happy Hacking & Smart Contract Learning!**
+
+
