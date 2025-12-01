@@ -1,0 +1,13 @@
+{
+  "name": "codewars-solidity",
+  "version": "1.0.0",
+  "description": "Solidity practice",
+  "scripts": {
+    "test": "hardhat test"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "hardhat": "^2.22.0"
+  }
+}
+
