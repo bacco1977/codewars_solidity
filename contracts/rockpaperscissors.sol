@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 contract RockPaperScissors {
+    address public owner;
     uint public gamesCount = 0;
     mapping(uint => Game) public games;
     // INSERT_YOUR_CODE
@@ -22,6 +23,10 @@ contract RockPaperScissors {
     event GameStarted(address[] players, uint gameNumber);
     event GameComplete(address winner, uint gameNumber);
     event GameMove(address player, uint gameNumber, uint moveNumber);
+
+    constructor() {
+        owner = msg.sender;
+    }
 
     /*
      * Use this endpoint to create a game.
@@ -129,9 +134,9 @@ contract RockPaperScissors {
         if (move1 == move2) {
             return address(0);
         } else if (
-            (move1 == 1 && move2 == 3) ||
-            (move1 == 2 && move2 == 1) ||
-            (move1 == 3 && move2 == 2)
+            (move1 == ROCK && move2 == SCISSORS) ||
+            (move1 == PAPER && move2 == ROCK) ||
+            (move1 == SCISSORS && move2 == PAPER)
         ) {
             return creator;
         } else {
@@ -140,27 +145,37 @@ contract RockPaperScissors {
     }
     
 
-function _payout(Game storage game, uint gameNumber) internal {
-    uint move1 = game.moves[game.creator];
-    uint move2 = game.moves[game.participant];
-    game.winner = _determineWinner(
-        game.creator,
-        game.participant,
-        game.moves
-    );
+    function _payout(Game storage game, uint gameNumber) internal {
+        uint move1 = game.moves[game.creator];
+        uint move2 = game.moves[game.participant];
+        game.winner = _determineWinner(
+            game.creator,
+            game.participant,
+            game.moves
+        );
 
-    if (move1 != move2) {
-        // Not a draw -- winner gets both bets
-        emit GameComplete(game.winner, gameNumber);
-        uint payout = game.bet * 2;
-        (bool success, ) = payable(game.winner).call{value: payout}("");
-        require(success, "Payout failed");
-    } else {
-        // Draw -- refund both original bets
-        emit GameComplete(address(0), gameNumber);
-        (bool sent1, ) = payable(game.creator).call{value: game.bet}("");
-        (bool sent2, ) = payable(game.participant).call{value: game.bet}("");
-        require(sent1 && sent2, "Refund failed");
+        if (move1 != move2) {
+            // Not a draw -- winner gets both bets
+            emit GameComplete(game.winner, gameNumber);
+            uint payout = game.bet * 2;
+            (bool success, ) = payable(game.winner).call{value: payout}("");
+            require(success, "Payout failed");
+        } else {
+            // Draw -- refund both original bets
+            emit GameComplete(address(0), gameNumber);
+            (bool sent1, ) = payable(game.creator).call{value: game.bet}("");
+            (bool sent2, ) = payable(game.participant).call{value: game.bet}("");
+            require(sent1 && sent2, "Refund failed");
+        }
     }
-}
+
+    /**
+     * @dev Withdraws all ether from the contract to the owner's address.
+     * Can only be called by the owner.
+     */
+    function withdraw() public {
+        require(msg.sender == owner, "Only owner can withdraw");
+        (bool sent, ) = payable(owner).call{value: address(this).balance}("");
+        require(sent, "Withdraw failed");
+    }
 }
