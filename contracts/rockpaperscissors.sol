@@ -103,10 +103,9 @@ contract RockPaperScissors {
             game.participant == msg.sender || game.creator == msg.sender,
             "You are not a player in this game"
         );
-        require(moveNumber >= 1 && moveNumber <= 3, "Invalid move number");
+        require(moveNumber >= ROCK && moveNumber <= SCISSORS, "Invalid move number");
         //check if the player has already made a move
         require(game.moves[msg.sender] == 0, "You have already made a move");
-        // Call the winner determination logic
         // 1. Record the move FIRST
         game.moves[msg.sender] = moveNumber;
         emit GameMove(msg.sender, gameNumber, moveNumber);
