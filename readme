@@ -155,6 +155,57 @@ it("Should return the first 3 multiples of 5", async function () {
 });
 ```
 
+// INSERT_YOUR_CODE
+
+### 3. RockPaperScissors (PvP Betting Game)
+
+**File:** `contracts/rockpaperscissors.sol`  
+**Test:** `test/rockpaperscissors.test.js`
+
+- Implements a simple on-chain Rock-Paper-Scissors for two players, where both stake a bet.
+- One player ("creator") invites another ("participant"). Both must deposit the same amount.
+- Each player submits their move (`1=rock`, `2=paper`, `3=scissors`). Winner takes both bets; if drawn, both are refunded.
+- Smart contract tracks game state, emits events, and sends payouts/refunds.
+- Tests verify joining, duplicate moves, correct payout amounts, and edge cases (e.g., ties).
+
+**Sample Solidity contract snippet:**
+```solidity
+contract RockPaperScissors {
+    // ... contract fields and events ...
+
+    function createGame(address payable participant) public payable {
+        // Creator sets up a game and deposits bet
+        // ...
+    }
+
+    function joinGame(uint gameNumber) public payable {
+        // Invited participant joins, matching the bet
+        // ...
+    }
+
+    function makeMove(uint gameNumber, uint moveNumber) public {
+        // Submit a move; triggers payout when both have played
+        // ...
+    }
+
+    // ... internal logic for determining winner and payouts ...
+}
+```
+
+**Sample JavaScript test:**
+```js
+it("Should pay out winner correctly", async function () {
+  // addr1 creates, addr2 joins and wins; verify on-chain winner and balance changes
+  // ...
+});
+
+it("Should refund both on tie", async function () {
+  // Both pick 'rock' -- each gets their bet back (minus gas)
+  // ...
+});
+```
+
+
 ---
 
 ## How To Use
